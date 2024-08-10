@@ -77,6 +77,7 @@ public class SceneFader : MonoBehaviour
         // Ensure the image is fully transparent at the end
         color.a = 0f;
         fadeImage.color = color;
+        
     }
 
     private IEnumerator FadeOut(string sceneName)

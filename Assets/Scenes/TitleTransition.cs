@@ -39,7 +39,7 @@ public class TitleTransition : MonoBehaviour
         //}
         Debug.Log("Fading out scene");
         sceneFader.FadeToScene(nextSceneName);
-        return null;
+        yield return null;
 
     }
 

@@ -24,7 +24,7 @@ public class SceneOpener : MonoBehaviour
         //}
         Debug.Log("Fading out scene");
         sceneFader.FadeToScene(scene);
-        return null;
+        yield return null;
 
     }
 

@@ -78,8 +78,11 @@ public class MobManager : MonoBehaviour
 
     IEnumerator spawnBulletSequence(){
         while (true) {
+            transform.position = new Vector3(transform.position.x, transform.position.y, _player.transform.position.z);
             yield return new WaitForSeconds(1f);
-            StartCoroutine(func());
+            if (Vector3.Magnitude(transform.position - _player.transform.position) <= 27) {
+                StartCoroutine(func());
+            }
         }
     }
 

@@ -54,198 +54,198 @@ public class AssistantManager : MonoBehaviour
         
         // setup
         List<string> temp = new List<string>
-        // {
-        //     "$ echo Hey, kid. I'm the assistant.",
-        //     "$ echo Welcome to Terraform. Move around with the arrow keys."
-        // };
-        // commands.Add(temp);
-        // // temp = new List<string>
-        // // {
-        // //     "$ echo Great work. Now, jump using the up arrow.",
-        // //     "$ echo You can hold the up arrow to jump higher."
-        // // };
-        // // commands.Add(temp);
-        // // temp = new List<string>
-        // // {
-        // //     "$ echo The player can wall jump.",
-        // //     "$ echo Get to the top of that wall to the left."
-        // // };
-        // // commands.Add(temp);
-        // // temp = new List<string>
-        // // {
-        // //     "$ echo Now, make the player dash by pressing [Tab].",
-        // //     "$ echo You will dash in the direction of the arrow keys."
-        // // };
-        // // commands.Add(temp);
-        // // temp = new List<string>
-        // // {
-        // //     "$ echo You can slide down a wall by tapping the opposite arrow.",
-        // //     "$ echo Climb and slide down the left wall."
-        // // };
-        // // commands.Add(temp);
-        // // temp = new List<string>
-        // // {
-        // //     "$ echo That\'s all you'll need for mechanics.",
-        // //     "$ echo Play around. When you're ready, let me know."
-        // // };
-        // // commands.Add(temp);
-        // // temp = new List<string>
-        // // {
-        // //     "$ echo Game elements are modifiable with the terminal in the back.",
-        // //     "$ echo You can run \"help\" for a more detailed explanation."
-        // // };
-        // // commands.Add(temp);
-        // temp = new List<string>
-        // {
-        //     "$ echo (tutorial skipped)",
-        //     "$ echo Let\'s have some fun with the terminal.",
-        //     "$ echo Follow me. Move.",
-        //     "$ unprotect find_entity",
-        //     "$ A=find_entity(assistant)",
-        //     "$ unprotect A",
-        //     "$ force A 2102 --impulse",
-        //     "$ force A -273 --impulse",
-        //     "$ stabilize A --d=state",
-        //     "$ protect A",
-        //     "$ protect find_entity",
-        //     "$ echo Time is of the essence."
-        // };
-        // commands.Add(temp);
-        // temp = new List<string>
-        // {
-        //     "$ echo Commands can modify the game in various ways.",
-        //     "$ echo Let's move to a more advanced playground.",
-        //     "$ unprotect A",
-        //     "$ force A 300 --impulse",
-        //     "$ gravity A --g=0.1",
-        //     "$ adduser assistant sudo",
-        //     "$ sudo entity RW --a=destroy",
-        //     "$ gravity A --reset",
-        //     "$ echo While powerful, sudo commands aren't stable.",
-        //     "$ force A 9999 --instant",
-        //     "$ echo Try to minimize your usage of them.",
-        //     "$ stabilize A --d=state",
-        //     "$ echo See you on the other side.",
-        //     "$ stabilize A --d=state",
-        //     "$ force A 9999 --instant",
-        //     "$ force P 9000 --instant",
-        //     "$ force A 217 --impulse",
-        //     "$ gravity A --g=0.0",
-        //     "$ sudo add --platform 5 -5",
-        //     "$ echo Saved ya. ;)",
-        //     "$ force A 217 --impulse",
-        //     "$ sudo add --platform 5 -5",
-        //     "$ force A 217 --impulse",
-        //     "$ sudo add --platform 2 -6",
-        //     "$ stabilize A --d=state",
-        //     "$ echo Don't keep me waiting. We have much to do.",
-        //     "$ force A 217 --impulse",
-        //     "$ gravity A --g=8.0",
-        //     "$ echo Welcome to my playground."
-        // };
-        // commands.Add(temp);
-
-
-        // temp = new List<string>
-        // {
-        //     "$ echo Let's practice using commands.",
-        //     "$ echo Go over there. To the right.",
-        //     "$ unprotect P",
-        //     "$ force P 9999 --instant",
-        //     "$ echo You can destroy a block via \"sudo destroy [ID]\"",
-        //     "$ echo Try not to move. This will be quick.",
-        //     "$ gravity A --none",
-        //     "$ force P 9999 --instant",
-        //     "$ force A 9998 --instant",
-        //     "$ sudo add --wall 8.5 0.40001",
-        //     "$ gravity A --g=8.0",
-        //     "$ echo You\'re stuck.",
-        //     "$ sudo assign %0 \"wall\"",
-        //     "$ echo Remove this wall. I've assigned it an ID of \"wall\".",
-        //     "$ echo Run the command:\n\"sudo destroy wall\""
-        // };
-        // commands.Add(temp);
-        // temp = new List<string>
-        // {
-        //     "$ echo Nice control. You're a natural.",
-        //     "$ echo You can create a new block via \"sudo add --[type] [dx] [dy]\"",
-        //     "$ echo Type can be platform or wall.",
-        //     "$ echo dx and dy are relative to your player.",
-        //     "$ echo For instance, you can add a block above you via \n\"sudo add --platform 5 0\"",
-        //     "$ echo Catch me if you can.",
-        //     "$ echo Don't keep me waiting too long, mkay?",
-        //     "$ force P 9999 --instant",
-        //     "$ force A 9998 --instant",
-        //     "$ force A 300 --impulse",
-        //     "$ gravity A --none",
-        //     "$ force A 300 --impulse",
-        //     "$ stablilize A --d=state",
-        //     "$ force A 300 --impulse",
-        //     "$ stablilize A --d=state",
-        //     "$ force A 300 --impulse",
-        //     "$ stablilize A --d=state",
-        //     "$ sudo add --platform 0 -3",
-        //     "$ gravity A --g=8.0",
-        //     "$ echo Easter egg from devs, ig.",
-        // };
-        // commands.Add(temp);
-        // temp = new List<string>
         {
-            // "$ echo Great work.",
-            // "$ echo Let's clean up, shall we?",
-            // "$ sudo destroy zHdQ#s --quick",
-            // "$ echo And the others as well, of course.",
-            // "$ force A 100 --impulse",
-            // "$ sudo destroy --user --mod",
-            "$ force P 9999 --instant",
-            "$ force A 9998 --instant",
-            // "$ echo It's time for the move command.",
-            // "$ echo I can't perform it, sadly. The mind has aged over the years.",
-            // "$ echo However, you can do it: \"sudo move [id] [dx] [dy]\"",
-            // "$ sudo assign _k&/!2 \"portal\"",
-            // "$ echo Move that portal to me. It has id \"portal\"",
-            // "$ gravity A --g=8.0",
-            // "$ force P 9999 --instant",
-            // "$ force A 9998 --instant",
-            // "$ force A 300 --impulse",
-            // "$ force P 9999 --instant",
-            // "$ stablilize A --d=state",
-            // "$ force P 9999 --instant",
-            // "$ sudo unprotect framework",
-            // "$ force P 9999 --instant",
-            // "$ sudo add --wall 3.5 1.9",
-            // "$ sudo add --wall -3.5 1.9",
-            // "$ sudo add --platform 0 4.4",
-            // "$ force P 9999 --instant",
-            // "$ echo Hustle, kid. It's quite boring in here.",
+            "$ echo Hey, kid. I'm the assistant.",
+            "$ echo Welcome to Terraform. Move around with the arrow keys."
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo Great work. Now, jump using the up arrow.",
+            "$ echo You can hold the up arrow to jump higher."
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo The player can wall jump.",
+            "$ echo Get to the top of that wall to the left."
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo Now, make the player dash by pressing [Tab].",
+            "$ echo You will dash in the direction of the arrow keys."
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo You can slide down a wall by tapping the opposite arrow.",
+            "$ echo Climb and slide down the left wall."
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo That\'s all you'll need for mechanics.",
+            "$ echo Play around. When you're ready, let me know."
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo Game elements are modifiable with the terminal in the back.",
+            "$ echo You can run \"help\" for a more detailed explanation."
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo (tutorial skipped)",
+            "$ echo Let\'s have some fun with the terminal.",
+            "$ echo Follow me. Move.",
+            "$ unprotect find_entity",
+            "$ A=find_entity(assistant)",
+            "$ unprotect A",
+            "$ force A 2102 --impulse",
+            "$ force A -273 --impulse",
+            "$ stabilize A --d=state",
+            "$ protect A",
+            "$ protect find_entity",
+            "$ echo Time is of the essence."
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo Commands can modify the game in various ways.",
+            "$ echo Let's move to a more advanced playground.",
+            "$ unprotect A",
+            "$ force A 300 --impulse",
+            "$ gravity A --g=0.1",
+            "$ adduser assistant sudo",
+            "$ sudo entity RW --a=destroy",
+            "$ gravity A --reset",
+            "$ echo While powerful, sudo commands aren't stable.",
+            "$ force A 9999 --instant",
+            "$ echo Try to minimize your usage of them.",
+            "$ stabilize A --d=state",
+            "$ echo See you on the other side.",
+            "$ stabilize A --d=state",
+            "$ force A 9999 --instant",
+            "$ force P 9000 --instant",
+            "$ force A 217 --impulse",
+            "$ gravity A --g=0.0",
+            "$ sudo add --platform 5 -5",
+            "$ echo Saved ya. ;)",
+            "$ force A 217 --impulse",
+            "$ sudo add --platform 5 -5",
+            "$ force A 217 --impulse",
+            "$ sudo add --platform 2 -6",
+            "$ stabilize A --d=state",
+            "$ echo Don't keep me waiting. We have much to do.",
+            "$ force A 217 --impulse",
+            "$ gravity A --g=8.0",
+            "$ echo Welcome to my playground."
         };
         commands.Add(temp);
 
 
         temp = new List<string>
         {
-            // "$ echo You did it!",
-            // "$ force P 9999 --instant",
-            // "$ force A 1100 --instant",
-            // "$ sudo destroy % --all",
-            // "$ echo You've completed the tutorial!",
-            // "$ echo (entering storymode)",
-            // "$ echo In that case, let me get rid of this portal. I'll give you a bit more of a tour.",
-            // "$ sudo destroy portal",
-            // "$ echo hmm. strange.",
+            "$ echo Let's practice using commands.",
+            "$ echo Go over there. To the right.",
+            "$ unprotect P",
+            "$ force P 9999 --instant",
+            "$ echo You can destroy a block via \"sudo destroy [ID]\"",
+            "$ echo Try not to move. This will be quick.",
+            "$ gravity A --none",
+            "$ force P 9999 --instant",
+            "$ force A 9998 --instant",
+            "$ sudo add --wall 8.5 0.40001",
+            "$ gravity A --g=8.0",
+            "$ echo You\'re stuck.",
+            "$ sudo assign %0 \"wall\"",
+            "$ echo Remove this wall. I've assigned it an ID of \"wall\".",
+            "$ echo Run the command:\n\"sudo destroy wall\""
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo Nice control. You're a natural.",
+            "$ echo You can create a new block via \"sudo add --[type] [dx] [dy]\"",
+            "$ echo Type can be platform or wall.",
+            "$ echo dx and dy are relative to your player.",
+            "$ echo For instance, you can add a block above you via \n\"sudo add --platform 5 0\"",
+            "$ echo Catch me if you can.",
+            "$ echo Don't keep me waiting too long, mkay?",
+            "$ force P 9999 --instant",
+            "$ force A 9998 --instant",
+            "$ force A 300 --impulse",
+            "$ gravity A --none",
+            "$ force A 300 --impulse",
+            "$ stablilize A --d=state",
+            "$ force A 300 --impulse",
+            "$ stablilize A --d=state",
+            "$ force A 300 --impulse",
+            "$ stablilize A --d=state",
+            "$ sudo add --platform 0 -3",
+            "$ gravity A --g=8.0",
+            "$ echo Easter egg from devs, ig.",
+        };
+        commands.Add(temp);
+        temp = new List<string>
+        {
+            "$ echo Great work.",
+            "$ echo Let's clean up, shall we?",
+            "$ sudo destroy zHdQ#s --quick",
+            "$ echo And the others as well, of course.",
+            "$ force A 100 --impulse",
+            "$ sudo destroy --user --mod",
+            "$ force P 9999 --instant",
+            "$ force A 9998 --instant",
+            "$ echo It's time for the move command.",
+            "$ echo I can't perform it, sadly. The mind has aged over the years.",
+            "$ echo However, you can do it: \"sudo move [id] [dx] [dy]\"",
+            "$ sudo assign _k&/!2 \"portal\"",
+            "$ echo Move that portal to me. It has id \"portal\"",
+            "$ gravity A --g=8.0",
+            "$ force P 9999 --instant",
+            "$ force A 9998 --instant",
+            "$ force A 300 --impulse",
+            "$ force P 9999 --instant",
+            "$ stablilize A --d=state",
+            "$ force P 9999 --instant",
+            "$ sudo unprotect framework",
+            "$ force P 9999 --instant",
+            "$ sudo add --wall 3.5 1.9",
+            "$ sudo add --wall -3.5 1.9",
+            "$ sudo add --platform 0 4.4",
+            "$ force P 9999 --instant",
+            "$ echo Hustle, kid. It's quite boring in here.",
+        };
+        commands.Add(temp);
+
+
+        temp = new List<string>
+        {
+            "$ echo You did it!",
+            "$ force P 9999 --instant",
+            "$ force A 1100 --instant",
+            "$ sudo destroy % --all",
+            "$ echo You've completed the tutorial!",
+            "$ echo (entering storymode)",
+            "$ echo In that case, let me get rid of this portal. I'll give you a bit more of a tour.",
+            "$ sudo destroy portal",
+            "$ echo hmm. strange.",
             "$ gravity A --g=0.1",
             "$ force A 1000 --instant",
-            // "$ sudo destroy portal <color=white></color>",
-            // "$ echo leaves me no choice, then.",
-            // "$ sudo destroy portal <color=white></color>",
-            // "$ sudo destroy portal <color=white>-</color>",
-            // "$ sudo destroy portal <color=white>-r</color>",
-            // "$ sudo destroy portal <size=2><color=white>-rf</color></size>",
-            // "$ echo ",
-            // "$ echo ... what just happened?",
-            // "$ echo ",
-            // "$ echo That's not...",
-            // "$ echo What?",
+            "$ sudo destroy portal <color=white></color>",
+            "$ echo leaves me no choice, then.",
+            "$ sudo destroy portal <color=white></color>",
+            "$ sudo destroy portal <color=white>-</color>",
+            "$ sudo destroy portal <color=white>-r</color>",
+            "$ sudo destroy portal <size=2><color=white>-rf</color></size>",
+            "$ echo ",
+            "$ echo ... what just happened?",
+            "$ echo ",
+            "$ echo That's not...",
+            "$ echo What?",
             "$ echo No, I should best...",
         };
         commands.Add(temp);

@@ -76,8 +76,8 @@
     <Compile Include="Assets/LEVEL_ASSETS/CompletedLevels.cs" />
     <Compile Include="Assets/FadeInOut.cs" />
     <Compile Include="Assets/Scenes/MoveToMouse.cs" />
-    <Compile Include="Assets/LEVEL_ASSETS/TPTOADMIN.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/SimpleCameraController.cs" />
+    <Compile Include="Assets/LEVEL_ASSETS/TPTOADMIN.cs" />
     <Compile Include="Assets/FitToParent.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/OscillateBloomIntensity.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/Terminal/LevelInterpreter.cs" />
