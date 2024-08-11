@@ -22,10 +22,10 @@ public class TPTOADMIN : MonoBehaviour
     void OnCollisionEnter2D() {
         player.transform.position = new Vector3(70, 6, player.transform.position.z);
         player.GetComponent<RespawnManager>().respawnPos = new Vector3(70, 6, player.transform.position.z);
-        assistant.transform.position = new Vector3(558, -2, assistant.transform.position.z);
-        AssistantManager am = assistant.GetComponent<AssistantManager>();
-        am.commands = new List<List<string>>();
-        am.interactCount = 0;
+        // assistant.transform.position = new Vector3(558, -2, assistant.transform.position.z);
+        // AssistantManager am = assistant.GetComponent<AssistantManager>();
+        // am.commands = new List<List<string>>();
+        // am.interactCount = 0;
         
     }
 }

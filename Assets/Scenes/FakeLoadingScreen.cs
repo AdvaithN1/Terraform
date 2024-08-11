@@ -12,11 +12,11 @@ public class FakeLoadingScreen : MonoBehaviour
 
     private string[] loadingMessages = new string[]
     {
-        "Preparing Scanner...",
-        "Decrypting file...",
-        "Establishing Socket...",
-        "Reading File...",
-        "Initializing Terminal Session..."
+        "Preparing Scanner",
+        "Decrypting file",
+        "Establishing Socket",
+        "Reading File",
+        "Initializing Terminal"
     };
 
     private void Start()

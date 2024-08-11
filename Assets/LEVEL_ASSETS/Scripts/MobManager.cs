@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Unity.VisualScripting;
-using UnityEditor.EditorTools;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.Search;
 using UnityEditor;
 using Unity.Collections;
 
@@ -79,7 +77,7 @@ public class MobManager : MonoBehaviour
     IEnumerator spawnBulletSequence(){
         while (true) {
             transform.position = new Vector3(transform.position.x, transform.position.y, _player.transform.position.z);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
             if (Vector3.Magnitude(transform.position - _player.transform.position) <= 27) {
                 StartCoroutine(func());
             }
@@ -99,12 +97,12 @@ public class MobManager : MonoBehaviour
             if (attack.IsDestroyed()) {
                 break;
             }
-            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.65f) {
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.67f) {
                 // break;
-                _player.transform.position += Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 900f) - attack.transform.position;
+                _player.transform.position += Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 550f) - attack.transform.position;
             }
 
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(5 * i, 300) / 900f);
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(5 * i, 300) / 550f);
             yield return null;
         }
         if (!attack.IsDestroyed()) {

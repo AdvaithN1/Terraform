@@ -6,17 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/DummyLevel.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/LEVEL_ASSETS/Scenes/StoryMode.unity
+    guid: 90d185dba426c484e894b9d47ef9f9bc
+  - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: 6be6275a0cd0c4e2691636b3d08a2eee
   - enabled: 1
     path: Assets/Scenes/Home.unity
     guid: ab51eceee5f0c41e3ae3f61604ac22a9
   - enabled: 1
     path: Assets/Scenes/Locked.unity
     guid: 90bd8a804f4a14434a0f569a464c8320
-  - enabled: 1
-    path: Assets/Scenes/Title.unity
-    guid: 6be6275a0cd0c4e2691636b3d08a2eee
   - enabled: 1
     path: Assets/LEVEL_ASSETS/Scenes/Level 1.unity
     guid: 599f969da80fe4ea2b3672cab49b5846
@@ -30,9 +30,9 @@ EditorBuildSettings:
     path: Assets/LEVEL_ASSETS/Scenes/Level 4.unity
     guid: 5a47aefa40f0b4b54ada9d95f947da0c
   - enabled: 1
-    path: Assets/LEVEL_ASSETS/Scenes/StoryMode.unity
-    guid: 90d185dba426c484e894b9d47ef9f9bc
-  - enabled: 1
     path: Assets/LEVEL_ASSETS/Scenes/Level 2.unity
     guid: dc839a2218cde4d58bf5e3334b69a44a
+  - enabled: 1
+    path: Assets/Scenes/DummyLevel.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects: {}

@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Unity.VisualScripting;
-using UnityEditor.EditorTools;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.Search;
 using UnityEditor;
 
 public class AssistantManager : MonoBehaviour
@@ -56,6 +54,7 @@ public class AssistantManager : MonoBehaviour
         List<string> temp = new List<string>
         {
             "$ echo Hey, kid. I'm the assistant.",
+            "$ echo If you are not a new player, you can press shift to skip the tutorial.",
             "$ echo Welcome to Terraform. Move around with the arrow keys."
         };
         commands.Add(temp);
@@ -68,7 +67,7 @@ public class AssistantManager : MonoBehaviour
         temp = new List<string>
         {
             "$ echo The player can wall jump.",
-            "$ echo Get to the top of that wall to the left."
+            "$ echo You can slide down a wall by tapping the opposite arrow."
         };
         commands.Add(temp);
         temp = new List<string>
@@ -79,25 +78,12 @@ public class AssistantManager : MonoBehaviour
         commands.Add(temp);
         temp = new List<string>
         {
-            "$ echo You can slide down a wall by tapping the opposite arrow.",
-            "$ echo Climb and slide down the left wall."
-        };
-        commands.Add(temp);
-        temp = new List<string>
-        {
-            "$ echo That\'s all you'll need for mechanics.",
-            "$ echo Play around. When you're ready, let me know."
-        };
-        commands.Add(temp);
-        temp = new List<string>
-        {
             "$ echo Game elements are modifiable with the terminal in the back.",
             "$ echo You can run \"help\" for a more detailed explanation."
         };
         commands.Add(temp);
         temp = new List<string>
         {
-            "$ echo (tutorial skipped)",
             "$ echo Let\'s have some fun with the terminal.",
             "$ echo Follow me. Move.",
             "$ unprotect find_entity",
@@ -229,8 +215,8 @@ public class AssistantManager : MonoBehaviour
             "$ force A 1100 --instant",
             "$ sudo destroy % --all",
             "$ echo You've completed the tutorial!",
-            "$ echo (entering storymode)",
-            "$ echo In that case, let me get rid of this portal. I'll give you a bit more of a tour.",
+            "$ echo (to enter level select, beat story mode)",
+            "$ echo Let me get rid of this portal. I'll give you a bit more of a tour.",
             "$ sudo destroy portal",
             "$ echo hmm. strange.",
             "$ gravity A --g=0.1",
@@ -256,6 +242,16 @@ public class AssistantManager : MonoBehaviour
     // {
         
     // }
+
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && interactCount <= 2) {
+            interactCount = 9;
+            StopAllCoroutines();
+            dialogueRunning = true;
+            StartCoroutine(displayProcess(interactCount++));
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (!dialogueRunning) {
@@ -303,7 +299,7 @@ public class AssistantManager : MonoBehaviour
                         yield return new WaitForSeconds(0.05f);
                     }
                 }
-                yield return new WaitForSeconds((currentSet[i].Split().Length - 2) / 6 + 1.5f);
+                yield return new WaitForSeconds((currentSet[i].Split().Length - 2) / 8 + 1.3f);
 
                 if (commandLine.text =="$ echo ... what just happened?") {
                     portalScript.StartRoutine();
@@ -495,7 +491,7 @@ public class AssistantManager : MonoBehaviour
                             overlay.SetActive(true);
                             aura.SetActive(false);
                             glitchRepeat[4].Play();
-                            yield return new WaitUntil(() => glitchRepeat[4].time >= glitchRepeat[4].clip.length);
+                            yield return new WaitForSeconds(0.3f);
                             portal.GetComponent<SpriteRenderer>().color = Color.black;
                             foreach (ParticleSystem ps in portal.GetComponentsInChildren<ParticleSystem>()) {
                                 ps.startColor = Color.black;
@@ -505,7 +501,8 @@ public class AssistantManager : MonoBehaviour
                                 ps.GetComponent<ParticleSystemRenderer>().sortingOrder = 1000;
                             }
                             glitchRepeat[3].Play();
-                            yield return new WaitUntil(() => glitchRepeat[3].time >= glitchRepeat[3].clip.length * 2.8f / 3f);
+                            yield return new WaitForSeconds(0.4f);
+                            glitchRepeat[3].Stop();
                             errorSFX.Play();
                             while (b.intensity.value > 5.5) {
                                 b.intensity.Override(b.intensity.value + Random.Range(-8.5f, 4.0f));

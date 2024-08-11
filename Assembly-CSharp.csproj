@@ -76,8 +76,8 @@
     <Compile Include="Assets/LEVEL_ASSETS/CompletedLevels.cs" />
     <Compile Include="Assets/FadeInOut.cs" />
     <Compile Include="Assets/Scenes/MoveToMouse.cs" />
-    <Compile Include="Assets/LEVEL_ASSETS/Scripts/SimpleCameraController.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/TPTOADMIN.cs" />
+    <Compile Include="Assets/LEVEL_ASSETS/Scripts/SimpleCameraController.cs" />
     <Compile Include="Assets/FitToParent.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/OscillateBloomIntensity.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/Terminal/LevelInterpreter.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="Assets/LEVEL_ASSETS/TransparencyManager.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/MoveToAdmin.cs" />
     <Compile Include="Assets/LockDeleter.cs" />
+    <Compile Include="Assets/EvilAssistantManager.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/FloatyX2.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/Contrast/SpriteOutlineFX.cs" />
     <Compile Include="Assets/Scenes/FakeLoadingScreen.cs" />
