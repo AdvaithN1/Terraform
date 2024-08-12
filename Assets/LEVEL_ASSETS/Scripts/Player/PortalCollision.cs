@@ -7,6 +7,7 @@ public class PortalCollision : MonoBehaviour
     public GameObject player;
     public SceneFader sceneFader;
     public string scene = "Home";
+    public float time = 0;
     public int levelNumber;
 
     private void OnCollisionEnter2D(Collision2D collision)

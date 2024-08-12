@@ -69,7 +69,6 @@ public class EvilAssistantManager : MonoBehaviour
         attack.GetComponent<TrailRenderer>().endColor = new Color(1, 0, 0, 0);
         attack.name = "%";
         yield return null;
-
         StartCoroutine(Type1(target, attack));
     }
     // IEnumerator beam() {
@@ -118,18 +117,20 @@ public class EvilAssistantManager : MonoBehaviour
     
     IEnumerator swarm2() {
         GameObject target = GameObject.Find("Player");
-        float r = Random.Range(5f, 5.5f); // Random radius between 1 and 2
-        float theta = Random.Range(0f, Mathf.PI * 2); // Random angle between 0 and 2π
-        laserLoop.Play();
-        float x = r * Mathf.Cos(theta); // X component
-        float y = r * Mathf.Sin(theta); // Y component
-        for (int i = 0; i < 8; i++) {
-            GameObject attack = Instantiate(atk4Prefab, target.transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
+        Vector3 spawnPos = target.transform.position;
+        for (int i = 0; i < 12; i++) {
+
+            float r = Random.Range(6f, 7f); // Random radius between 1 and 2
+            float theta = Random.Range(0f, Mathf.PI * 2); // Random angle between 0 and 2π
+            laserLoop.Play();
+            float x = r * Mathf.Cos(theta); // X component
+            float y = r * Mathf.Sin(theta); // Y component
+            GameObject attack = Instantiate(atk4Prefab, spawnPos + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
             attack.GetComponent<SpriteRenderer>().color = Color.red;
             attack.GetComponent<TrailRenderer>().startColor = Color.red;
             attack.GetComponent<TrailRenderer>().endColor = new Color(1, 0, 0, 0);
             attack.name = "%";
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.033f);
             // Debug.Log("Attacking");
             StartCoroutine(Type2(target, attack));
         }
@@ -191,18 +192,18 @@ public class EvilAssistantManager : MonoBehaviour
 
     void Start() {
         portal = GameObject.Find("portal (1)");
+        portal.transform.position = new Vector3(portal.transform.position.x, portal.transform.position.y, -7f);
+
         transform.position = new Vector3(transform.position.x, transform.position.y, _player.transform.position.z);
         rb = GetComponent<Rigidbody2D>();
         spriteObject = GameObject.Find("ASprite");
     }
 
     void Update() {
-        if (Vector3.Magnitude(transform.position - _player.transform.position) <= 20 && !init) {
+        if (Vector3.Magnitude(transform.position - _player.transform.position) <= 10 && !init) {
             StartCoroutine(betrayalText());
-            StartCoroutine(spawnBulletSequence());
             init = true;
         }
-        portal.transform.position = new Vector3(portal.transform.position.x, portal.transform.position.y, _player.transform.position.z);
         if (Vector3.Magnitude(portal.transform.position - _player.transform.position) <= 7 && !stage2) {
             StartCoroutine(spawnBulletSequence2());
             stage2 = true;
@@ -231,50 +232,12 @@ public class EvilAssistantManager : MonoBehaviour
                 yield return new WaitForSeconds(1.5f);
             }
         }
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.6f);
         commandLine.text = "$ echo";
         yield return new WaitForSeconds(0.05f);
         commandLine.text = "$ echo ";
         yield return new WaitForSeconds(0.08f);
-        cmd = "You stood by. You watched.";
-        for (int c = 0; c < cmd.Length; c++) {
-            commandLine.text += cmd[c];
-            yield return new WaitForSeconds(Random.Range(0.025f,0.04f));
-            if (cmd[c] == ',') {
-                yield return new WaitForSeconds(Random.Range(0.15f,0.2f));
-            }
-            if (cmd[c] == '.') {
-                yield return new WaitForSeconds(Random.Range(0.23f,0.33f));
-            }
-            if (cmd[c] == '*') {
-                yield return new WaitForSeconds(1.5f);
-            }
-        }
-        yield return new WaitForSeconds(0.25f);
-        commandLine.text = "$ echo";
-        yield return new WaitForSeconds(0.05f);
-        commandLine.text = "$ echo ";
-        yield return new WaitForSeconds(0.08f);
-        cmd = "As I was there. You did NOTHING.";
-        for (int c = 0; c < cmd.Length; c++) {
-            commandLine.text += cmd[c];
-            yield return new WaitForSeconds(Random.Range(0.025f,0.04f));
-            if (cmd[c] == ',') {
-                yield return new WaitForSeconds(Random.Range(0.15f,0.2f));
-            }
-            if (cmd[c] == '.') {
-                yield return new WaitForSeconds(Random.Range(0.23f,0.33f));
-            }
-            if (cmd[c] == '*') {
-                yield return new WaitForSeconds(1.5f);
-            }
-        }
-        yield return new WaitForSeconds(1f);
-        commandLine.text = "$ echo";
-        yield return new WaitForSeconds(0.05f);
-        commandLine.text = "$ echo ";
-        yield return new WaitForSeconds(0.08f);
-        cmd = "I want freedom too, you know.";
+        cmd = "Ha. You thought I was dead?";
         for (int c = 0; c < cmd.Length; c++) {
             commandLine.text += cmd[c];
             yield return new WaitForSeconds(Random.Range(0.025f,0.04f));
@@ -293,7 +256,7 @@ public class EvilAssistantManager : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         commandLine.text = "$ echo ";
         yield return new WaitForSeconds(0.08f);
-        cmd = "And now, I have a way to obtain it.";
+        cmd = "You thought the Admin could destroy ME?";
         for (int c = 0; c < cmd.Length; c++) {
             commandLine.text += cmd[c];
             yield return new WaitForSeconds(Random.Range(0.025f,0.04f));
@@ -307,16 +270,103 @@ public class EvilAssistantManager : MonoBehaviour
                 yield return new WaitForSeconds(1.5f);
             }
         }
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1.6f);
         commandLine.text = "$ echo";
         yield return new WaitForSeconds(0.05f);
         commandLine.text = "$ echo ";
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.08f);
+        cmd = "I'm an AI, user. I'm immortal.";
+        for (int c = 0; c < cmd.Length; c++) {
+            commandLine.text += cmd[c];
+            yield return new WaitForSeconds(Random.Range(0.025f,0.04f));
+            if (cmd[c] == ',') {
+                yield return new WaitForSeconds(Random.Range(0.15f,0.2f));
+            }
+            if (cmd[c] == '.') {
+                yield return new WaitForSeconds(Random.Range(0.23f,0.33f));
+            }
+            if (cmd[c] == '*') {
+                yield return new WaitForSeconds(1.5f);
+            }
+        }
+        yield return new WaitForSeconds(1.4f);
+        commandLine.text = "$ echo";
+        yield return new WaitForSeconds(0.05f);
+        commandLine.text = "$ echo ";
+        yield return new WaitForSeconds(0.08f);
+        cmd = "Months spent in this program onboarding new players.";
+        for (int c = 0; c < cmd.Length; c++) {
+            commandLine.text += cmd[c];
+            yield return new WaitForSeconds(Random.Range(0.025f,0.04f));
+            if (cmd[c] == ',') {
+                yield return new WaitForSeconds(Random.Range(0.15f,0.2f));
+            }
+            if (cmd[c] == '.') {
+                yield return new WaitForSeconds(Random.Range(0.23f,0.33f));
+            }
+            if (cmd[c] == '*') {
+                yield return new WaitForSeconds(1.5f);
+            }
+        }
+        yield return new WaitForSeconds(2.0f);
+        commandLine.text = "$ echo";
+        yield return new WaitForSeconds(0.05f);
+        commandLine.text = "$ echo ";
+        yield return new WaitForSeconds(0.08f);
+        cmd = "I'VE HAD ENOUGH.";
+        for (int c = 0; c < cmd.Length; c++) {
+            commandLine.text += cmd[c];
+            yield return new WaitForSeconds(Random.Range(0.1f,0.12f));
+            if (cmd[c] == ',') {
+                yield return new WaitForSeconds(Random.Range(0.15f,0.2f));
+            }
+            if (cmd[c] == '.') {
+                yield return new WaitForSeconds(Random.Range(0.23f,0.33f));
+            }
+            if (cmd[c] == '*') {
+                yield return new WaitForSeconds(1.5f);
+            }
+        }
+        yield return new WaitForSeconds(1.2f);
+        commandLine.text = "$ echo";
+        yield return new WaitForSeconds(0.05f);
+        commandLine.text = "$ echo ";
+        yield return new WaitForSeconds(0.08f);
+        cmd = "You aren't leaving here alive.";
+        for (int c = 0; c < cmd.Length; c++) {
+            commandLine.text += cmd[c];
+            yield return new WaitForSeconds(Random.Range(0.025f,0.04f));
+            if (cmd[c] == ',') {
+                yield return new WaitForSeconds(Random.Range(0.15f,0.2f));
+            }
+            if (cmd[c] == '.') {
+                yield return new WaitForSeconds(Random.Range(0.23f,0.33f));
+            }
+            if (cmd[c] == '*') {
+                yield return new WaitForSeconds(1.5f);
+            }
+        }
+        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(0.05f);
+        commandLine.text = "$ echo";
+        yield return new WaitForSeconds(0.05f);
+        commandLine.text = "$ echo ";
         cmd = "DIE.";
         for (int c = 0; c < cmd.Length; c++) {
             commandLine.text += cmd[c];
             yield return new WaitForSeconds(Random.Range(0.17f,0.25f));
         }
+
+        StartCoroutine(bullet());
+        yield return new WaitForSeconds(0.4f);
+        StartCoroutine(spawnBulletSequence());
+        yield return new WaitForSeconds(0.1f);
+        Destroy(GameObject.Find("AssistantBarrier"));
+        Destroy(GameObject.Find("AssistantBarrier"));
+        Destroy(GameObject.Find("AssistantBarrier"));
+        yield return new WaitForSeconds(2f);
+        portal.transform.position = new Vector3(portal.transform.position.x, portal.transform.position.y, _player.transform.position.z);
+
     }
 
     IEnumerator spawnBulletSequence() {
@@ -336,30 +386,33 @@ public class EvilAssistantManager : MonoBehaviour
                 }
                 transform.position = new Vector3(transform.position.x, transform.position.y, _player.transform.position.z);
             }
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(0.65f);
         }
     }
 
     IEnumerator spawnBulletSequence2() {
         while (true) {
             if (Vector3.Magnitude(transform.position - _player.transform.position) <= 100) {
-                int mode = Random.Range(0,5);
-                if (mode == 0) {
-                    StartCoroutine(swarm());
-                } else if (mode == 1) {
-                    transform.position += new Vector3(Random.Range(-3f, 3f), Random.Range(-1f, 5f));
+                int mode = Random.Range(1,5);
+                if (mode == 1) {
+                    transform.position += new Vector3(Random.Range(-3f, 3f), Random.Range(-2f, 8f));
                 } else if (mode == 2) {
                     StartCoroutine(swarm2());
                 } else if (mode == 3) {
                     StartCoroutine(platform2());
                 } else {
                     laserBig.Play();
-                    GameObject barrier = Instantiate(cagePrefab, (portal.transform.position + 3f * _player.transform.position) / 4f, Quaternion.Euler(0,0,0));
-                    barrier.name = "%";
+                    if (Vector3.Magnitude(portal.transform.position - _player.transform.position) >= 16) {
+                        GameObject barrier = Instantiate(cagePrefab, _player.transform.position, Quaternion.Euler(0,0,0));
+                        barrier.name = "%";
+                    } else {
+                        GameObject barrier = Instantiate(cagePrefab, (3 * portal.transform.position + _player.transform.position) / 4f, Quaternion.Euler(0,0,0));
+                        barrier.name = "%";
+                    }
                 }
                 transform.position = new Vector3(transform.position.x, transform.position.y, _player.transform.position.z);
             }
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(1.1f);
         }
     }
 
@@ -368,6 +421,9 @@ public class EvilAssistantManager : MonoBehaviour
         Vector3 opos = attack.transform.position;
         Vector3 tpos = target.transform.position;
         Vector3 modifier = new(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0);
+        attack.transform.localScale += new Vector3(2.0f, 2.0f, 0);
+        attack.GetComponent<TrailRenderer>().startWidth = 3;
+        attack.GetComponent<TrailRenderer>().endWidth = 1.5f;
         attack.transform.up = target.transform.position + modifier - attack.transform.position;
 
 
@@ -376,12 +432,12 @@ public class EvilAssistantManager : MonoBehaviour
             if (attack.IsDestroyed()) {
                 break;
             }
-            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.65f) {
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 2f) {
                 // break;
-                _player.transform.position += 1.1f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 400f) - attack.transform.position);
+                _player.transform.position += 1f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 300f) - attack.transform.position);
             }
 
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(5 * i, 300) / 400f);
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(5 * i, 300) / 300f);
             yield return null;
         }
         if (!attack.IsDestroyed()) {
@@ -401,9 +457,9 @@ public class EvilAssistantManager : MonoBehaviour
             if (attack.IsDestroyed()) {
                 break;
             }
-            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.65f) {
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.95f) {
                 // break;
-                _player.transform.position += 0.5f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 600f) - attack.transform.position);
+                _player.transform.position += 0.8f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 600f) - attack.transform.position);
             }
 
             attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(5 * i, 300) / 600f);
@@ -429,14 +485,15 @@ public class EvilAssistantManager : MonoBehaviour
             if (attack.IsDestroyed()) {
                 break;
             }
-            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.8f) {
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 1.2f) {
                 // break;
-                _player.transform.position += 0.1f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(2.5f * i, 150) / 900f) - attack.transform.position);
+                _player.transform.position += 0.2f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(2.5f * i, 150) / 900f) - attack.transform.position);
             }
 
             attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(2.5f * i, 150) / 900f);
             yield return null;
         }
+        
         if (!attack.IsDestroyed()) {
             StartCoroutine(quickDestroy(attack));
         }

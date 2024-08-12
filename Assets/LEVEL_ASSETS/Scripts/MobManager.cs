@@ -20,6 +20,8 @@ public class MobManager : MonoBehaviour
     public GameObject aura;
     private Outline threadShell;
 
+    private bool type;
+
     [Header("Audio Clips (Attacking)")]
     public AudioSource laserSingle;
     public AudioSource laserLoop;
@@ -53,6 +55,10 @@ public class MobManager : MonoBehaviour
     [SerializeField] private GameObject _player;
 
 
+    void Awake() {
+        type = Random.Range(0, 2) == 0;
+    }
+
     IEnumerator func() {
         GameObject target = GameObject.Find("Player");
         float r = Random.Range(1f, 1.5f); // Random radius between 1 and 2
@@ -64,7 +70,11 @@ public class MobManager : MonoBehaviour
         attack.name = "%";
         yield return null;
         Debug.Log("Attacking");
+        if (type) {
         StartCoroutine(Type1(target, attack));
+        } else {
+        StartCoroutine(Type2(target, attack));
+        }
     }
 
 
@@ -103,6 +113,31 @@ public class MobManager : MonoBehaviour
             }
 
             attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(5 * i, 300) / 550f);
+            yield return null;
+        }
+        if (!attack.IsDestroyed()) {
+            Destroy(attack);
+        }
+    }
+
+    IEnumerator Type2(GameObject target, GameObject attack) {
+        Vector3 opos = attack.transform.position;
+        Vector3 tpos = target.transform.position;
+        Vector3 modifier = new(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0);
+        attack.transform.up = target.transform.position + modifier - attack.transform.position;
+
+
+        yield return new WaitForSeconds(0.25f);
+        for (int i = 1; i <= 1000; i++) {
+            if (attack.IsDestroyed()) {
+                break;
+            }
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.67f) {
+                // break;
+                _player.transform.position +=  Vector3.MoveTowards(attack.transform.position, attack.transform.position + 100 * (tpos + modifier - opos), Mathf.Min(5 * i, 300) / 200f) - attack.transform.position;
+            }
+
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + 100 * (tpos + modifier - opos), Mathf.Min(5 * i, 300) / 200f);
             yield return null;
         }
         if (!attack.IsDestroyed()) {

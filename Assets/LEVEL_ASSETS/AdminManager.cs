@@ -88,15 +88,15 @@ public class AdminManager : MonoBehaviour
             "# sudo prpt echo --direct",
             "# sudo prpt echo --direct",
             "Best not to mess with things you don\'t completely understand.",
-            "Relax, player. I'll deal with you after this.",
+            "Relax, player. I'm on your side.",
             "What's up with the screen?",
             "# sudo restart graphicdriver -f",
             "# sudo restart audiodriver -f",
             "# play bgm.mp3 --loop",
-            "Recursive confirmation isn't to be treated lightly. ",
+            "You knew destroying the portal will obliterate anyone near it.",
+            "Player, you're lucky I stepped in. Else you would be dealing with a blue screen right now.",
             "# force A -300 --impulse",
-            "You\'ve messed with my system for long enough.",
-            "Today was the last straw. I\'m afraid I can\'t let this continue.",
+            "Guess dealing with another rogue AI is gonna be on my schedule today",
             "# install attacksystem",
             "Let\'s try this out.",
             "# atk --type=1 --tar=A",
@@ -121,12 +121,10 @@ public class AdminManager : MonoBehaviour
         temp = new List<string>
         {
             "Those AI agents are hopeless. No amount of training makes them do what they\'re supposed to.",
-            "That pathetic red guy was supposed to have you playtest the game. Not break it.",
+            "That red guy was supposed to have you playtest the game. Not try to kill you.",
             "Think I'll do this process manually from now on.",
             "...",
             "Anyways, let's get started with your onboarding.",
-            "I don't have that much time to waste on this game, I'm a busy developer after all.",
-            "I'll just give you everything you need right now.",
             "I'll override your player data real quick...",
             "# sudo allow_player_godmode",
             "# sudo allow_player_attack",
@@ -136,28 +134,30 @@ public class AdminManager : MonoBehaviour
             "... You're already a sudoer.",
             "Strange.",
             "Anyways, you now have a bunch of keybinds.",
-            "Delete the most recent object (i.e. a bullet) created by someone else with x.",
-            "You can spawn a temporary platform by holding left shift.",
-            "When you release left shift, it will be destroyed",
-            "That's it from me. Go test my new level.",
-            "What?",
-            "Listen here, buddy. I'm the dev. I make the rules.",
-            "You do what I tell you to do. Or you'll end up like that pathetic red guy.",
-            "Got it?",
-            "Get out of my sight.",
+            "Press [X] to delete the most recent object (i.e. a bullet) created by someone else.",
+            "It doesn't do anything right now, see. I'll summon a few bullets for you to try though.",
+            "# cd 69 7",
+            "Try intercepting these bullets once they get close by pressing [X]",
+            "# atk --type=0 --tar=P",
+            "# cd 65 11",
+            "# atk --type=1 --tar=P",
+            "# cd 76 3.4",
+            "# atk --type=4 --tar=P",
+            "Not all bullets will be as harmless as this. While they won't damage you, they will push you.",
+            "If you're pushed off the map into the void, you will respawn.",
+            "Hold [Left Shift] to summon a platform under you.",
+            "When you release [Left Shift], it will be destroyed",
+            "I'll send you to an easy course to get used to this.",
             "# sudo start_test"
         };
         commands.Add(temp);
         temp = new List<string>
         {
-            "Oh, you're done?",
-            "Go do another. Let's see...",
-            "What? You want an actual story?",
-            "Enough games. On you go.",
-            "Okay, fine.",
-            "You can leave if you playtest my most difficult level.",
-            "Do we have a deal?",
-            "Great! I'll send you there. Good luck-you'll need it.",
+            "Great work.",
+            "There's this level I've been working on that's been quite difficult.",
+            "Can you see if it's possible?",
+            "Follow the ghost platforms. They'll show you the path when applicable.",
+            "Make extensive use of [X]. Good luck-you'll need it.",
             "# sudo start_test_2"
         };
         commands.Add(temp);
@@ -245,6 +245,8 @@ public class AdminManager : MonoBehaviour
                     GameObject target;
                     if (cmdargs[3] == "--tar=A") {
                         target = assistant;
+                    } else if (cmdargs[3] == "--tar=P") {
+                        target = GameObject.Find("Player");
                     } else {
                         target = transform.gameObject;
                     }
@@ -256,14 +258,29 @@ public class AdminManager : MonoBehaviour
                         float x = r * Mathf.Cos(theta); // X component
                         float y = r * Mathf.Sin(theta); // Y component
                         attack = Instantiate(atk1Prefab, transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
+                        attack.name = "%";
                         IEnumerator routine = Type1(target, attack);
                         StartCoroutine(routine);
                         yield return new WaitForSeconds(0.3f);
+                        if (target == assistant) {
+                            laserSingle.Stop();
+                            am.commandLine.text = "$ sudo destroy % --quick";
+                            StartCoroutine(am.quickDestroy(attack));
+                            yield return new WaitForSeconds(0.15f);
+                            StopCoroutine(routine);
+                        }
+                    }  else if (cmdargs[2] == "--type=0") {
+                        float r = Random.Range(1f, 2f); // Random radius between 1 and 2
+                        float theta = Random.Range(0f, Mathf.PI * 2); // Random angle between 0 and 2π
+                        laserSingle.Play();
+                        float x = r * Mathf.Cos(theta); // X component
+                        float y = r * Mathf.Sin(theta); // Y component
+                        attack = Instantiate(atk1Prefab, transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
+                        attack.name = "%";
+                        IEnumerator routine = Type0(target, attack);
+                        StartCoroutine(routine);
+                        yield return new WaitForSeconds(1f);
                         laserSingle.Stop();
-                        am.commandLine.text = "$ sudo destroy % --quick";
-                        StartCoroutine(am.quickDestroy(attack));
-                        yield return new WaitForSeconds(0.15f);
-                        StopCoroutine(routine);
                     } else if (cmdargs[2] == "--type=4") {
                         int count = 1;
                         if (cmdargs.Length >= 5) {
@@ -282,7 +299,9 @@ public class AdminManager : MonoBehaviour
 
                             float x = r * Mathf.Cos(theta); // X component
                             float y = r * Mathf.Sin(theta); // Y component
+                            
                             atk[j] = Instantiate(atk4Prefab, transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
+                            atk[j].name = "%";
                             routines[j] = Type1Swarm(target, atk[j], 0.4f);
                             StartCoroutine(routines[j]);
                             yield return new WaitForSeconds(0.4f/count);
@@ -291,15 +310,17 @@ public class AdminManager : MonoBehaviour
 
                         yield return new WaitForSeconds(0.38f);
 
+                        if (target == assistant) {
                         // yield return new WaitForSeconds(0.1f);
-                        am.commandLine.text = "$ sudo destroy %<color=white>./*</color> --quick";
-                        for (int j = 0; j < count; j++) {
-                            StartCoroutine(am.quickDestroy(atk[j]));
-                            yield return new WaitForSeconds(0.15f/count);
-                        }
-                        for (int j = 0; j < count; j++) {
-                            StopCoroutine(routines[j]);
-                            yield return new WaitForSeconds(0.15f/count);
+                            am.commandLine.text = "$ sudo destroy %<color=white>./*</color> --quick";
+                            for (int j = 0; j < count; j++) {
+                                StartCoroutine(am.quickDestroy(atk[j]));
+                                yield return new WaitForSeconds(0.15f/count);
+                            }
+                            for (int j = 0; j < count; j++) {
+                                StopCoroutine(routines[j]);
+                                yield return new WaitForSeconds(0.15f/count);
+                            }
                         }
                         
                     } else if (cmdargs[2] == "--type=3") {
@@ -322,6 +343,7 @@ public class AdminManager : MonoBehaviour
                             float x = r * Mathf.Cos(theta); // X component
                             float y = r * Mathf.Sin(theta); // Y component
                             atk[j] = Instantiate(atk3Prefab, transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
+                            atk[j].name = "%";
                             routines[j] = Type1Swarm(target, atk[j], 0.4f);
                             StartCoroutine(routines[j]);
                             yield return new WaitForSeconds(0.4f/count);
@@ -363,6 +385,7 @@ public class AdminManager : MonoBehaviour
                             float y = r * Mathf.Sin(theta); // Y component
                             atk[j] = Instantiate(atk2Prefab, transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
                             atk[j].transform.localScale = new Vector3(0.3f, 1f, 0.3f);
+                            atk[j].name = "%";
                             routines[j] = Type1Swarm(target, atk[j], 0.8f);
                             StartCoroutine(routines[j]);
                             yield return new WaitForSeconds(0.8f/count);
@@ -668,9 +691,9 @@ public class AdminManager : MonoBehaviour
                             foreach (ParticleSystem ps in portal.GetComponentsInChildren<ParticleSystem>()) {
                                 ps.startColor = Color.black;
                             }
-                            yield return new WaitForSeconds(0.2f);
+                            yield return new WaitForSeconds(0.3f);
                             portal.transform.position = new Vector3(75, 3.4f, portal.transform.position.z);
-                            yield return new WaitForSeconds(0.7f);
+                            yield return new WaitForSeconds(1.8f);
                             portal.transform.localScale = globalVector;
                             portal.GetComponent<SpriteRenderer>().color = Color.white;
                             foreach (ParticleSystem ps in portal.GetComponentsInChildren<ParticleSystem>()) {
@@ -910,6 +933,18 @@ public class AdminManager : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         for (int i = 1; i <= 5000; i++) {
             attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 900f);
+            yield return null;
+        }
+    }
+    IEnumerator Type0(GameObject target, GameObject attack) {
+        Vector3 opos = attack.transform.position;
+        Vector3 modifier = new(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0);
+        attack.transform.up = target.transform.position + modifier - attack.transform.position;
+
+
+        yield return new WaitForSeconds(0.4f);
+        for (int i = 1; i <= 5000; i++) {
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 5000);
             yield return null;
         }
     }
