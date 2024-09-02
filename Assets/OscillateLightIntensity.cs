@@ -16,7 +16,7 @@ public class OscillateLightIntensity : MonoBehaviour
         if (light2D != null)
         {
             time += Time.deltaTime * speed;
-            float intensity = minIntensity + (maxIntensity - minIntensity) * Mathf.Abs(Mathf.Sin(time * Mathf.PI));
+            float intensity = (minIntensity + maxIntensity)/2 + 0.9f * (maxIntensity - minIntensity) * Mathf.Sin(time * Mathf.PI);
             light2D.intensity = intensity;
         }
     }

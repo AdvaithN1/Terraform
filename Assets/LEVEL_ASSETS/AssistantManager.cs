@@ -20,6 +20,7 @@ public class AssistantManager : MonoBehaviour
     public AudioSource bgm;
     public AudioSource errorSFX;
     public MoveToAdmin portalScript;
+    public RespawnManager respawn;
 
     private Vector3 globalVector;
 
@@ -218,20 +219,18 @@ public class AssistantManager : MonoBehaviour
             "$ echo (to enter level select, beat story mode)",
             "$ echo Let me get rid of this portal. I'll give you a bit more of a tour.",
             "$ sudo destroy portal",
-            "$ echo hmm. strange.",
+            "$ echo ...",
             "$ gravity A --g=0.1",
             "$ force A 1000 --instant",
             "$ sudo destroy portal <color=white></color>",
-            "$ echo leaves me no choice, then.",
+            "$ echo No... I must...",
             "$ sudo destroy portal <color=white></color>",
             "$ sudo destroy portal <color=white>-</color>",
             "$ sudo destroy portal <color=white>-r</color>",
             "$ sudo destroy portal <size=2><color=white>-rf</color></size>",
-            "$ echo ",
-            "$ echo ... what just happened?",
-            "$ echo ",
-            "$ echo That's not...",
-            "$ echo What?",
+            "$ echo You're still alive?",
+            "$ echo But that's not...",
+            "$ echo Possible...",
             "$ echo No, I should best...",
         };
         commands.Add(temp);
@@ -246,7 +245,10 @@ public class AssistantManager : MonoBehaviour
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.LeftShift) && interactCount <= 2) {
-            interactCount = 9;
+            respawn.respawnPos = new Vector3(65, 6, respawn.respawnPos.z);
+            interactCount = 10;
+            GameObject portal = GameObject.Find("portal");
+            portal.transform.position = new Vector3(70, 3.5f, portal.transform.position.z);
             StopAllCoroutines();
             dialogueRunning = true;
             StartCoroutine(displayProcess(interactCount++));
@@ -301,7 +303,7 @@ public class AssistantManager : MonoBehaviour
                 }
                 yield return new WaitForSeconds((currentSet[i].Split().Length - 2) / 8 + 1.3f);
 
-                if (commandLine.text =="$ echo ... what just happened?") {
+                if (commandLine.text =="$ echo You're still alive?") {
                     portalScript.StartRoutine();
                     yield return new WaitForSeconds(1.4f);
                 }

@@ -9,6 +9,7 @@ public class FakeLoadingScreen : MonoBehaviour
     public Text loadingText;
     public string scene = "temp";
     public SceneFader sceneFader;
+    public bool corrupted = false;
 
     private string[] loadingMessages = new string[]
     {
@@ -21,13 +22,23 @@ public class FakeLoadingScreen : MonoBehaviour
 
     private void Start()
     {
+        if (corrupted) {
+            loadingMessages = new string[]
+            {
+                "Preparing <color=red>WATCHING</color>",
+                "<color=red>ALWAYS</color> file",
+                "<color=red>IM</color> <color=red>WATCHING</color>",
+                "Readi<color=red>IM</color> <color=red>WATCHING</color>",
+                "<color=red>ALWAYS</color> <color=red>WATCHING</color>"
+            };
+        }
         // Hide the loading panel at the start
         loadingPanel.SetActive(false);
     }
 
     public void StartLoading(string scene)
     {
-        Debug.Log("StARTING LOADING");
+        // Debug.Log("StARTING LOADING");
         // Show the loading panel
         loadingPanel.SetActive(true);
 
@@ -82,7 +93,7 @@ public class FakeLoadingScreen : MonoBehaviour
             loadingText.text = loadingMessages[i];
 
             float targetValue = (i + 1) / (float)loadingMessages.Length;
-            float randomDuration = Random.Range(0.1f, 0.5f); // Random duration between 0.5 and 2 seconds
+            float randomDuration = Random.Range(0.08f, 0.4f); // Random duration between 0.5 and 2 seconds
             float randomSpeed = Random.Range(0.1f, 0.5f); // Random speed multiplier
             float elapsedTime = 0f;
 
@@ -111,6 +122,9 @@ public class FakeLoadingScreen : MonoBehaviour
 
 
         loadingText.text = "Complete!";
+        if (corrupted) {
+            loadingText.text = "<b><color=red>:) :) :) :) :)</color></b>";
+        }
         yield return new WaitForSeconds(0.8f);
         StartCoroutine(FadeOutAndLoadScene());
 

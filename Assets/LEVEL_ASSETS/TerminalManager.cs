@@ -26,6 +26,12 @@ public class TerminalManager : MonoBehaviour
 
     void Update()
     {
+        if (terminalInput.text.Length > 0) {
+            if (terminalInput.text[^1] == 'x' || terminalInput.text[^1] == 'X') {
+                terminalInput.text.Remove(terminalInput.text.Length - 1);
+            }
+        }
+        terminalInput.caretPosition = terminalInput.text.Length + 1;
         if (!terminalInput.isFocused) {
             terminalInput.ActivateInputField();
             terminalInput.Select();

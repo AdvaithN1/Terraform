@@ -21,19 +21,46 @@ public class LevelTerminalManager : MonoBehaviour
         interpreter = GetComponent<LevelInterpreter>();
         terminalInput.ActivateInputField();
         terminalInput.Select();
+        
     }
 
 
     void Update()
     {
+        terminalInput.caretPosition = terminalInput.text.Length + 1;
         if (!terminalInput.isFocused) {
+            terminalInput.ActivateInputField();
+            terminalInput.Select();
+        }
+
+        if (terminalInput.text == "" && Input.GetKeyDown(KeyCode.X)) {
+            commandSFX.Play();
+            string userInput = terminalInput.text;
+            AddDirectoryLine("exec getkey x");
+            // if (interpreter != null) {
+            //     Debug.Log("Interpreter is set.");
+            // }
+            int lines = AddInterpreterLines(new List<string> {"zsh: permission denied: keybind access removed"});
+            userInputLine.transform.SetAsFirstSibling();
+            terminalInput.ActivateInputField();
+            terminalInput.Select();
+        }
+        if (terminalInput.text == "" && Input.GetKeyDown(KeyCode.LeftShift)) {
+            commandSFX.Play();
+            string userInput = terminalInput.text;
+            AddDirectoryLine("exec getkey leftshift");
+            // if (interpreter != null) {
+            //     Debug.Log("Interpreter is set.");
+            // }
+            int lines = AddInterpreterLines(new List<string> {"zsh: permission denied: keybind access removed"});
+            userInputLine.transform.SetAsFirstSibling();
             terminalInput.ActivateInputField();
             terminalInput.Select();
         }
     }
 
     private void OnGUI() {
-        if (terminalInput.isFocused && terminalInput.text != "" && Input.GetKeyDown(KeyCode.Return)) {
+        if (terminalInput.text != "" && Input.GetKeyDown(KeyCode.Return)) {
             commandSFX.Play();
             string userInput = terminalInput.text;
             ClearInputField();

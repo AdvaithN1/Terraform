@@ -12,6 +12,8 @@ using Unity.Collections;
 
 
 
+
+
 public class AdminManager : MonoBehaviour
 {
 
@@ -122,8 +124,6 @@ public class AdminManager : MonoBehaviour
         {
             "Those AI agents are hopeless. No amount of training makes them do what they\'re supposed to.",
             "That red guy was supposed to have you playtest the game. Not try to kill you.",
-            "Think I'll do this process manually from now on.",
-            "...",
             "Anyways, let's get started with your onboarding.",
             "I'll override your player data real quick...",
             "# sudo allow_player_godmode",
@@ -131,18 +131,16 @@ public class AdminManager : MonoBehaviour
             "# sudo let_player_use_keybinds",
             "# sudo im_running_out_of_ideas_cant_you_tell",
             "# sudo adduser advan sudo",
-            "... You're already a sudoer.",
-            "Strange.",
-            "Anyways, you now have a bunch of keybinds.",
+            "You now have a bunch of keybinds.",
             "Press [X] to delete the most recent object (i.e. a bullet) created by someone else.",
-            "It doesn't do anything right now, see. I'll summon a few bullets for you to try though.",
+            "It doesn't do anything right now, see. I'll summon a few bullets for you to try.",
             "# cd 69 7",
             "Try intercepting these bullets once they get close by pressing [X]",
             "# atk --type=0 --tar=P",
             "# cd 65 11",
             "# atk --type=1 --tar=P",
             "# cd 76 3.4",
-            "# atk --type=4 --tar=P",
+            "# atk --type=4 --tar=P 4",
             "Not all bullets will be as harmless as this. While they won't damage you, they will push you.",
             "If you're pushed off the map into the void, you will respawn.",
             "Hold [Left Shift] to summon a platform under you.",
@@ -373,6 +371,7 @@ public class AdminManager : MonoBehaviour
                         GameObject[] atk = new GameObject[count];
                         IEnumerator[] routines = new IEnumerator[count];
                         laserLoop.Play();
+                        float theta1 = 0f;
                         for (int j = 0; j < count; j++) {
                             if (laserLoop.time > laserLoop.clip.length * 7f/8) {
                                 laserLoop.Play();
@@ -383,6 +382,12 @@ public class AdminManager : MonoBehaviour
 
                             float x = r * Mathf.Cos(theta); // X component
                             float y = r * Mathf.Sin(theta); // Y component
+                            float r1 = Random.Range(9.5f, 10f); // Random radius between 1 and 2
+                            theta1 = Random.Range(0f, Mathf.PI); // Random angle between 0 and 2π
+
+                            float x1 = r1 * Mathf.Cos(theta1); // X component
+                            float y1 = r1 * Mathf.Sin(theta1); // Y component
+                            transform.position = assistant.transform.position + new Vector3(x1, y1, 0);
                             atk[j] = Instantiate(atk2Prefab, transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
                             atk[j].transform.localScale = new Vector3(0.3f, 1f, 0.3f);
                             atk[j].name = "%";
@@ -403,7 +408,7 @@ public class AdminManager : MonoBehaviour
                         }
                         
                     }  else if (cmdargs[2] == "--type=5") {
-                        int count = 450;
+                        int count = 375;
                         assistant.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
                         GameObject[] atk = new GameObject[count];
                         IEnumerator[] routines = new IEnumerator[count];
@@ -416,25 +421,25 @@ public class AdminManager : MonoBehaviour
                             
                             am.commandLine.text = "$ sudo <color=white>rm</color> %<color=white>* -f</color>";
                             if (j < 1) {
-                                yield return null;
+                                yield return new WaitForSeconds(0.012f);
                             }
                             if (j < 3) {
-                                yield return null;
+                                yield return new WaitForSeconds(0.012f);
                             }
                             if (j < 6) {
-                                yield return null;
+                                yield return new WaitForSeconds(0.012f);
                             }
                             if (j < 12) {
-                                yield return null;
-                                assistant.transform.position -= new Vector3(Random.Range(0f, 0.1f), 0, 0);
+                                yield return new WaitForSeconds(0.012f);
+                                assistant.transform.position -= new Vector3(Random.Range(0f, 0.12f), 0, 0);
                             }
                             if (j < 25) {
-                                yield return null;
-                                assistant.transform.position -= new Vector3(Random.Range(0f, 0.03f), 0, 0);
+                                yield return new WaitForSeconds(0.012f);
+                                assistant.transform.position -= new Vector3(Random.Range(0f, 0.05f), 0, 0);
                             }
                             if (j < 50) {
-                                yield return null;
-                                assistant.transform.position -= new Vector3(Random.Range(0f, 0.008f), 0, 0);
+                                yield return new WaitForSeconds(0.012f);
+                                assistant.transform.position -= new Vector3(Random.Range(0f, 0.009f), 0, 0);
                             }
                             if (j < 100) {
                                 StartCoroutine(PerformBlockedAttack(target));
@@ -449,7 +454,7 @@ public class AdminManager : MonoBehaviour
                                 threadShell = commandLine.AddComponent<Outline>();
                                 threadShell.effectColor = Color.white;
                             
-                                for (int k = 80; k >= 0; k--) {
+                                for (int k = 55; k >= 0; k--) {
                                     threadShell.effectDistance = new Vector2(Mathf.MoveTowards(threadShell.effectDistance.x, 5, k / 640f), 0);
                                     yield return new WaitForSeconds(0.02f);
                                 }
@@ -466,19 +471,19 @@ public class AdminManager : MonoBehaviour
                                 StartCoroutine(PerformNearlyBlockedAttack(target, j - 100));
                             }
                             am.commandLine.text = "$ sudo rm %<color=white>*</color> -f";
-                            yield return null;
+                            yield return new WaitForSeconds(0.012f);
                             if (j < 400) {
-                                yield return null;
+                                yield return new WaitForSeconds(0.003f);
                             }
                             if (j < 70) {
-                                yield return null;
+                                yield return new WaitForSeconds(0.012f);
                             } else if (j == 70) {
                                 assistant.transform.position = new Vector3(62f, 3.4f,  assistant.transform.position.z);
                             } else {
-                                assistant.transform.position += new Vector3(0.003f, 0, 0);
+                                assistant.transform.position += new Vector3(0.005f, 0, 0);
                             }
 
-                            if (j == 300) {
+                            if (j == 250) {
                                 laserCharge.Play();
                                 StartCoroutine(PerformGatherAttack(target, 5, 0));
                             }
@@ -514,7 +519,7 @@ public class AdminManager : MonoBehaviour
                     assistantSprite.GetComponent<TrailRenderer>().startColor = assistantSprite.GetComponent<SpriteRenderer>().color;
                     assistantSprite.GetComponent<TrailRenderer>().endColor = new Color(assistantSprite.GetComponent<SpriteRenderer>().color.r, assistantSprite.GetComponent<SpriteRenderer>().color.g, assistantSprite.GetComponent<SpriteRenderer>().color.b, 0);
                 } else if (currentSet[i] == "# sudo restart graphicdriver -f") {
-                    respawn.respawnPos = new Vector3(70, 6, respawn.respawnPos.z);
+                    respawn.respawnPos = new Vector3(65, 6, respawn.respawnPos.z);
                     ca.intensity.Override(0.025f);
                     b.intensity.Override(4.5f);
                     yield return new WaitForSeconds(0.9f);
@@ -932,8 +937,11 @@ public class AdminManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
         for (int i = 1; i <= 5000; i++) {
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 900f);
-            yield return null;
+            if (attack.IsDestroyed()) {
+                yield break;
+            }
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(10 * i, 300) / 450f);
+            yield return new WaitForSeconds(0.012f);
         }
     }
     IEnumerator Type0(GameObject target, GameObject attack) {
@@ -944,8 +952,11 @@ public class AdminManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
         for (int i = 1; i <= 5000; i++) {
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 5000);
-            yield return null;
+            if (attack.IsDestroyed()) {
+                yield break;
+            }
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(10 * i, 300) / 900f);
+            yield return new WaitForSeconds(0.012f);
         }
     }
 
@@ -972,7 +983,7 @@ public class AdminManager : MonoBehaviour
         StartCoroutine(routine);
         yield return new WaitForSeconds(0.5f + Mathf.Log(modifier) / 80f);
         bool summoned = false;
-        if (Random.Range(10, 500) > modifier) {
+        if (Random.Range(2, 30) > Mathf.Log(modifier)) {
             StartCoroutine(am.rmDestroy(attack));
             summoned = true;
         }
@@ -980,6 +991,24 @@ public class AdminManager : MonoBehaviour
         if (summoned) {
             StopCoroutine(routine);
         }
+        if (!summoned) {
+            yield return new WaitForSeconds(0.15f - Mathf.Log(modifier) / 80f);
+            for (int i = 0; i < 700; i++) {
+                if (getDistance(assistant, attack) <= 1.2) {
+                    assistant.transform.position -= new Vector3(0.3f, 0, 0);
+                    break;
+                }
+                yield return new WaitForSeconds(0.012f);
+            }
+        }
+        yield return new WaitForSeconds(1.5f);
+        if (!attack.IsDestroyed()) {
+            Destroy(attack);
+        }
+    }
+
+    float getDistance(GameObject a, GameObject b) {
+        return Mathf.Pow(Mathf.Pow((a.transform.position.y - b.transform.position.y), 8) + Mathf.Pow((a.transform.position.x - b.transform.position.x), 8), 1/8f);
     }
 
     IEnumerator Type1Swarm(GameObject target, GameObject attack, float swarmModifier) {
@@ -990,8 +1019,11 @@ public class AdminManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f + swarmModifier);
         for (int i = 1; i <= 5000; i++) {
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 900f);
-            yield return null;
+            if (attack.IsDestroyed()) {
+                yield break;
+            }
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(10 * i, 300) / 900f);
+            yield return new WaitForSeconds(0.012f);
         }
     }
 
@@ -1030,7 +1062,7 @@ public class AdminManager : MonoBehaviour
             } else if (i == 20) {
                 attack.transform.localPosition += new Vector3(-1,2, 0f);
             }
-            yield return new WaitForSeconds(0.015f);
+            yield return new WaitForSeconds(0.011f);
             for (int j = 0; j < FXList.Count; j++) {
                 Destroy(FXList[j]);
             }
@@ -1048,21 +1080,21 @@ public class AdminManager : MonoBehaviour
         }
 
         
-        yield return new WaitForSeconds(0.02f);
+        yield return new WaitForSeconds(0.011f);
 
         for (int j = 0; j < FXList.Count; j++) {
             Destroy(FXList[j]);
         }
         FXList.Clear();
         bool done = false;
-        attack.GetComponent<TrailRenderer>().startWidth = 40;
-        attack.GetComponent<TrailRenderer>().endWidth = 2;
+        attack.GetComponent<TrailRenderer>().startWidth = 50;
+        attack.GetComponent<TrailRenderer>().endWidth = 20;
         for (int i = 2; i <= 240; i++) {
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target_opos - opos, Mathf.Max(130 - 10 * i, Mathf.Min(10 * i, 400)) / 900f);
-            if (attack.transform.position.x - target.transform.position.x <= 5 && attack.transform.position.x - target.transform.position.x >= -300) {
-                assistant.transform.position += new Vector3(-0.14f / Mathf.Log(i), 0, 0);
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + target_opos - opos, Mathf.Max(130 - 20 * i, Mathf.Min(20 * i, 400)) / 450f);
+            if (attack.transform.position.x - target.transform.position.x <= 7 && attack.transform.position.x - target.transform.position.x >= -300) {
+                assistant.transform.position += new Vector3(-0.15f / Mathf.Log(i), 0, 0);
             }
-            yield return null;
+            yield return new WaitForSeconds(0.012f);
         }
 
         Destroy(attack);

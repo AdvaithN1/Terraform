@@ -68,7 +68,7 @@ public class MobManager : MonoBehaviour
         float y = r * Mathf.Sin(theta); // Y component
         GameObject attack = Instantiate(atk1Prefab, transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
         attack.name = "%";
-        yield return null;
+        yield return new WaitForSeconds(0.012f);
         Debug.Log("Attacking");
         if (type) {
         StartCoroutine(Type1(target, attack));
@@ -109,11 +109,13 @@ public class MobManager : MonoBehaviour
             }
             if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.67f) {
                 // break;
-                _player.transform.position += Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 550f) - attack.transform.position;
+                _player.transform.position += Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(10 * i, 300) / 275f) - attack.transform.position;
             }
 
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(5 * i, 300) / 550f);
-            yield return null;
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(10 * i, 300) / 275f);
+            
+            yield return new WaitForSeconds(0.012f);
+            
         }
         if (!attack.IsDestroyed()) {
             Destroy(attack);
@@ -134,11 +136,11 @@ public class MobManager : MonoBehaviour
             }
             if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.67f) {
                 // break;
-                _player.transform.position +=  Vector3.MoveTowards(attack.transform.position, attack.transform.position + 100 * (tpos + modifier - opos), Mathf.Min(5 * i, 300) / 200f) - attack.transform.position;
+                _player.transform.position +=  Vector3.MoveTowards(attack.transform.position, attack.transform.position + 100 * (tpos + modifier - opos), Mathf.Min(10 * i, 300) / 100f) - attack.transform.position;
             }
 
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + 100 * (tpos + modifier - opos), Mathf.Min(5 * i, 300) / 200f);
-            yield return null;
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + 100 * (tpos + modifier - opos), Mathf.Min(10 * i, 300) / 100f);
+            yield return new WaitForSeconds(0.012f);
         }
         if (!attack.IsDestroyed()) {
             Destroy(attack);

@@ -59,7 +59,7 @@
     <UnityVersion>2022.3.39f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="/Users/advan/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.0.2/Analyzers/Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="/Users/advan/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.0.3/Analyzers/Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.39f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.39f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -70,12 +70,14 @@
     <Compile Include="Assets/LEVEL_ASSETS/LevelTerminalManager.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Parallax.cs" />
     <Compile Include="Assets/Scenes/TitleTransition.cs" />
+    <Compile Include="Assets/Flicker.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/TerminalManager.cs" />
     <Compile Include="Assets/Logger.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/df.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/CompletedLevels.cs" />
     <Compile Include="Assets/FadeInOut.cs" />
     <Compile Include="Assets/Scenes/MoveToMouse.cs" />
+    <Compile Include="Assets/Disappear.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/TPTOADMIN.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/SimpleCameraController.cs" />
     <Compile Include="Assets/FitToParent.cs" />
@@ -84,8 +86,10 @@
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/Contrast/SpriteOutline.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/BaseEffect.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/TransparencyManager.cs" />
+    <Compile Include="Assets/DestroyOnContact.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/MoveToAdmin.cs" />
     <Compile Include="Assets/LockDeleter.cs" />
+    <Compile Include="Assets/Scare.cs" />
     <Compile Include="Assets/EvilAssistantManager.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/FloatyX2.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/Contrast/SpriteOutlineFX.cs" />
@@ -93,6 +97,7 @@
     <Compile Include="Assets/Scenes/SceneFader.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/Player/PlayerData.cs" />
     <Compile Include="Assets/HomeOpen.cs" />
+    <Compile Include="Assets/AppearThenDisappear.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/RespawnManager.cs" />
     <Compile Include="Assets/Scenes/LoadingOpener.cs" />
     <Compile Include="Assets/Open_App.cs" />
@@ -102,19 +107,23 @@
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/Player/PlayerDataWithDash.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/Player/PortalCollision.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/ImageEffect.cs" />
+    <Compile Include="Assets/BlockX.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/LevelRespawnManager.cs" />
+    <Compile Include="Assets/CloseDisappear.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Scripts/Terminal/NewBehaviourScript.cs" />
     <Compile Include="Assets/Scenes/Movey.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/FloatyX1.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/AdminManager.cs" />
     <Compile Include="Assets/SceneOpener.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Floaty.cs" />
+    <Compile Include="Assets/BossPulse.cs" />
     <Compile Include="Assets/Scenes/Terminal.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/AssistantManager.cs" />
     <Compile Include="Assets/WeGame.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/ScanlinesEffect.cs" />
     <Compile Include="Assets/OscillateLightIntensity.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Averager.cs" />
+    <Compile Include="Assets/FrameRateSetter.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Pulse.cs" />
     <Compile Include="Assets/LEVEL_ASSETS/Floaty2.cs" />
     <Compile Include="Assets/fileSystem.cs" />

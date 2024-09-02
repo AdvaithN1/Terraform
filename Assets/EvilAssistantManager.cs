@@ -39,10 +39,12 @@ public class EvilAssistantManager : MonoBehaviour
     public Parallax cameraParallax;
     public GameObject averager;
     public Pulse pulser;
+    public BossPulse bosspulser;
     public AudioSource bgm;
     public AudioSource errorSFX;
     public MoveToAdmin portalScript;
     private GameObject portal;
+    public Volume v;
     
 
 
@@ -68,8 +70,38 @@ public class EvilAssistantManager : MonoBehaviour
         attack.GetComponent<TrailRenderer>().startColor = Color.red;
         attack.GetComponent<TrailRenderer>().endColor = new Color(1, 0, 0, 0);
         attack.name = "%";
-        yield return null;
+        yield return new WaitForSeconds(0.012f);
         StartCoroutine(Type1(target, attack));
+    }
+    IEnumerator bulletAccurate() {
+        GameObject target = GameObject.Find("Player");
+        float r = Random.Range(1f, 1.5f); // Random radius between 1 and 2
+        float theta = Random.Range(0f, Mathf.PI * 2); // Random angle between 0 and 2π
+        laserBig.Play();
+        float x = r * Mathf.Cos(theta); // X component
+        float y = r * Mathf.Sin(theta); // Y component
+        GameObject attack = Instantiate(atk1Prefab, transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
+        attack.GetComponent<SpriteRenderer>().color = Color.red;
+        attack.GetComponent<TrailRenderer>().startColor = Color.red;
+        attack.GetComponent<TrailRenderer>().endColor = new Color(1, 0, 0, 0);
+        attack.name = "%";
+        yield return new WaitForSeconds(0.012f);
+        StartCoroutine(Type1Accurate(target, attack));
+    }
+    IEnumerator bulletBig() {
+        GameObject target = GameObject.Find("Player");
+        float r = Random.Range(1f, 1.5f); // Random radius between 1 and 2
+        float theta = Random.Range(0f, Mathf.PI * 2); // Random angle between 0 and 2π
+        laserBig.Play();
+        float x = r * Mathf.Cos(theta); // X component
+        float y = r * Mathf.Sin(theta); // Y component
+        GameObject attack = Instantiate(atk1Prefab, transform.position + new Vector3(x, y, 0), Quaternion.Euler(0, 0, 0));
+        attack.GetComponent<SpriteRenderer>().color = Color.red;
+        attack.GetComponent<TrailRenderer>().startColor = Color.red;
+        attack.GetComponent<TrailRenderer>().endColor = new Color(1, 0, 0, 0);
+        attack.name = "%";
+        yield return new WaitForSeconds(0.012f);
+        StartCoroutine(Type1Big(target, attack));
     }
     // IEnumerator beam() {
     //     float x = Random.Range(-8f, 8f);
@@ -82,7 +114,7 @@ public class EvilAssistantManager : MonoBehaviour
     //     attack.GetComponent<TrailRenderer>().startWidth = 4;
     //     attack.GetComponent<TrailRenderer>().endWidth = 3;
     //     attack.GetComponent<TrailRenderer>().endColor = new Color(1, 0, 0, 0);
-    //     yield return null;
+    //     yield return new WaitForSeconds(0.012f);
 
     //     Vector3 opos = attack.transform.position;
     //     Vector3 tpos = target.transform.position;
@@ -210,6 +242,13 @@ public class EvilAssistantManager : MonoBehaviour
             laserBig.Play();
             GameObject barrier = Instantiate(cagePrefab, (portal.transform.position + 1.5f * _player.transform.position) / 2.5f, Quaternion.Euler(0,0,0));
             barrier.name = "%";
+            Vector3 offset = new Vector3(Random.Range(-3f,3f), Random.Range(-3f,3f), 0);
+            barrier = Instantiate(cagePrefab, (portal.transform.position + 1.5f * _player.transform.position) / 2.5f + offset, Quaternion.Euler(0,0,0));
+            barrier.name = "%";
+
+            offset = new Vector3(Random.Range(-3f,3f), Random.Range(-3f,3f), 0);
+            barrier = Instantiate(cagePrefab, (portal.transform.position + 1.5f * _player.transform.position) / 2.5f + offset, Quaternion.Euler(0,0,0));
+            barrier.name = "%";
         }
     }
 
@@ -270,6 +309,9 @@ public class EvilAssistantManager : MonoBehaviour
                 yield return new WaitForSeconds(1.5f);
             }
         }
+        pulser.enabled = false;
+        yield return new WaitForSeconds(0.012f);
+        bgm.Stop();
         yield return new WaitForSeconds(1.6f);
         commandLine.text = "$ echo";
         yield return new WaitForSeconds(0.05f);
@@ -290,6 +332,7 @@ public class EvilAssistantManager : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(1.4f);
+        bosspulser.enabled = true;
         commandLine.text = "$ echo";
         yield return new WaitForSeconds(0.05f);
         commandLine.text = "$ echo ";
@@ -358,13 +401,26 @@ public class EvilAssistantManager : MonoBehaviour
         }
 
         StartCoroutine(bullet());
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.15f);
+        StartCoroutine(bullet());
+        GameObject barrier = Instantiate(cagePrefab, portal.transform.position, Quaternion.Euler(0,0,0));
+        barrier.name = "%";
+        yield return new WaitForSeconds(0.15f);
+        StartCoroutine(bulletAccurate());
+        barrier = Instantiate(cagePrefab, portal.transform.position, Quaternion.Euler(0,0,0));
+        barrier.name = "%";
+        yield return new WaitForSeconds(0.15f);
+        StartCoroutine(bulletBig());
+        yield return new WaitForSeconds(0.15f);
         StartCoroutine(spawnBulletSequence());
         yield return new WaitForSeconds(0.1f);
         Destroy(GameObject.Find("AssistantBarrier"));
+        yield return new WaitForSeconds(0.012f);
         Destroy(GameObject.Find("AssistantBarrier"));
+        yield return new WaitForSeconds(0.012f);
         Destroy(GameObject.Find("AssistantBarrier"));
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.012f);
+        yield return new WaitForSeconds(0.5f);
         portal.transform.position = new Vector3(portal.transform.position.x, portal.transform.position.y, _player.transform.position.z);
 
     }
@@ -406,7 +462,12 @@ public class EvilAssistantManager : MonoBehaviour
                         GameObject barrier = Instantiate(cagePrefab, _player.transform.position, Quaternion.Euler(0,0,0));
                         barrier.name = "%";
                     } else {
-                        GameObject barrier = Instantiate(cagePrefab, (3 * portal.transform.position + _player.transform.position) / 4f, Quaternion.Euler(0,0,0));
+                        Vector3 offset = new Vector3(Random.Range(-3f,3f), Random.Range(-3f,3f), 0);
+                        GameObject barrier = Instantiate(cagePrefab, (3 * portal.transform.position + _player.transform.position) / 4f + offset, Quaternion.Euler(0,0,0));
+                        barrier.name = "%";
+
+                        offset = new Vector3(Random.Range(-3f,3f), Random.Range(-3f,3f), 0);
+                        barrier = Instantiate(cagePrefab, (3 * portal.transform.position + _player.transform.position) / 4f + offset, Quaternion.Euler(0,0,0));
                         barrier.name = "%";
                     }
                 }
@@ -432,13 +493,66 @@ public class EvilAssistantManager : MonoBehaviour
             if (attack.IsDestroyed()) {
                 break;
             }
-            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 2f) {
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 4) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 4) <= 4f) {
                 // break;
-                _player.transform.position += 1f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 300f) - attack.transform.position);
+                _player.transform.position += 1f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(10 * i, 300) / 150f) - attack.transform.position);
             }
 
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(5 * i, 300) / 300f);
-            yield return null;
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(10 * i, 300) / 150f);
+            yield return new WaitForSeconds(0.012f);
+        }
+        if (!attack.IsDestroyed()) {
+            quickDestroy(attack);
+        }
+    }
+    IEnumerator Type1Accurate(GameObject target, GameObject attack) {
+        Vector3 opos = attack.transform.position;
+        Vector3 tpos = target.transform.position;
+        attack.transform.localScale += new Vector3(2.0f, 2.0f, 0);
+        attack.GetComponent<TrailRenderer>().startWidth = 3;
+        attack.GetComponent<TrailRenderer>().endWidth = 1.5f;
+        attack.transform.up = target.transform.position - attack.transform.position;
+
+
+        yield return new WaitForSeconds(0.25f);
+        for (int i = 1; i <= 900; i++) {
+            if (attack.IsDestroyed()) {
+                break;
+            }
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 4) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 4) <= 4f) {
+                // break;
+                _player.transform.position += 1f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position - opos, Mathf.Min(10 * i, 300) / 150f) - attack.transform.position);
+            }
+
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos - opos) + (target.transform.position - opos), Mathf.Min(10 * i, 300) / 150f);
+            yield return new WaitForSeconds(0.012f);
+        }
+        if (!attack.IsDestroyed()) {
+            quickDestroy(attack);
+        }
+    }
+    IEnumerator Type1Big(GameObject target, GameObject attack) {
+        Vector3 opos = attack.transform.position;
+        Vector3 tpos = target.transform.position;
+        attack.transform.localScale += new Vector3(4.0f, 4.0f, 0);
+        attack.GetComponent<TrailRenderer>().startWidth = 4.5f;
+        attack.GetComponent<TrailRenderer>().endWidth = 2.0f;
+        attack.GetComponent<TrailRenderer>().time = 2.5f;
+        attack.transform.up = target.transform.position - attack.transform.position;
+
+
+        yield return new WaitForSeconds(0.3f);
+        for (int i = 1; i <= 800; i++) {
+            if (attack.IsDestroyed()) {
+                break;
+            }
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 4) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 4) <= 16f) {
+                // break;
+                _player.transform.position += 1f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position - opos, Mathf.Min(10 * i, 300) / 100f) - attack.transform.position);
+            }
+
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos - opos) + (target.transform.position - opos), Mathf.Min(10 * i, 300) / 100f);
+            yield return new WaitForSeconds(0.012f);
         }
         if (!attack.IsDestroyed()) {
             quickDestroy(attack);
@@ -457,13 +571,13 @@ public class EvilAssistantManager : MonoBehaviour
             if (attack.IsDestroyed()) {
                 break;
             }
-            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 0.95f) {
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 4) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 4) <= 1f) {
                 // break;
-                _player.transform.position += 0.8f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(5 * i, 300) / 600f) - attack.transform.position);
+                _player.transform.position += 0.8f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(10 * i, 300) / 300f) - attack.transform.position);
             }
 
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(5 * i, 300) / 600f);
-            yield return null;
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(10 * i, 300) / 300f);
+            yield return new WaitForSeconds(0.012f);
         }
         if (!attack.IsDestroyed()) {
             Destroy(attack);
@@ -485,13 +599,13 @@ public class EvilAssistantManager : MonoBehaviour
             if (attack.IsDestroyed()) {
                 break;
             }
-            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 2) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 2) <= 1.2f) {
+            if (Mathf.Pow(attack.transform.position.x - target.transform.position.x, 4) + Mathf.Pow(attack.transform.position.y - target.transform.position.y, 4) <= 1.5f) {
                 // break;
-                _player.transform.position += 0.2f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(2.5f * i, 150) / 900f) - attack.transform.position);
+                _player.transform.position += 0.2f * (Vector3.MoveTowards(attack.transform.position, attack.transform.position + target.transform.position + modifier - opos, Mathf.Min(4f * i, 150) / 450f) - attack.transform.position);
             }
 
-            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(2.5f * i, 150) / 900f);
-            yield return null;
+            attack.transform.position = Vector3.MoveTowards(attack.transform.position, attack.transform.position + (tpos + modifier - opos) + (target.transform.position + modifier - opos), Mathf.Min(4f * i, 150) / 450f);
+            yield return new WaitForSeconds(0.012f);
         }
         
         if (!attack.IsDestroyed()) {
@@ -507,7 +621,7 @@ public class EvilAssistantManager : MonoBehaviour
             } else  if (GameObject.Find("UserB") != null) {
                 StartCoroutine(quickDestroy(GameObject.Find("UserB")));
             }
-            yield return null;
+            yield return new WaitForSeconds(0.012f);
         }
     }
 
