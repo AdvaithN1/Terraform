@@ -35,3 +35,4 @@ Special thanks to AwesumSausPLUS (twitch) for extensive playtesting!
 
 
 <a style="color:white;">This is a Pantheon Labs production</a>
+Submission and 1st Place Winner of Galaxy One Game Jam.
